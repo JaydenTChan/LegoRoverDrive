@@ -85,7 +85,8 @@ def detector():
     objects = [(obj[0]//60, obj[1]//60) for obj in objects]
     print(objects)
     cap.release()
+    return objects
     #cv2.destroyAllWindows()
 
-detector()
+
 
