@@ -1,5 +1,12 @@
 import ev3
 import time
+import obj_detection as obj
+import numpy as np
+import cv2 
+from matplotlib import pyplot as plt
+import imutils
+
+
 
 def Main():
     ev3_1 = ev3.ev3("10.0.2.5", 5000) #laura (steering)
@@ -13,6 +20,7 @@ def Main():
     ev3_2.set_angle("B", "50", "90")
     """
     
+
     turnleft(ev3_1)
     time.sleep(1)
     forward(ev3_2)
@@ -28,22 +36,28 @@ def movegrid(ev3_1, ev3_2, pos, target):
 
     pass
     
-def forward(ev3):
-    ev3.set_motor_speed("A", "30")
-    ev3.set_motor_speed("B", "30")
-    ev3.set_motor_speed("C", "30")
+def forward(ev3, angle):
+    ev3.set_angle("A", "30", "1440")
+    ev3.set_angle("B", "30", "1440")
+    ev3.set_angle("C", "30", "1440")
     
 def stop(ev3):
-    ev3.set_motor_speed("A", "0")
-    ev3.set_motor_speed("B", "0")
-    ev3.set_motor_speed("C", "0")
+    ev3.set_angle("A", "0")
+    ev3.set_angle("B", "0")
+    ev3.set_angle("C", "0")
 
 def turnright(ev3):
+    """
+    Use with Laura ev3
+    """
     ev3.set_angle("A", "30", "90")
     ev3.set_angle("B", "30", "90")
     ev3.set_angle("C", "30", "90")
 
 def turnleft(ev3):
+    """
+    Use with Laura ev3
+    """
     ev3.set_angle("A", "-30", "-90")
     ev3.set_angle("B", "-30", "-90")
     ev3.set_angle("C", "-30", "-90")

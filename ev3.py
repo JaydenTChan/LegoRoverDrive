@@ -80,7 +80,7 @@ class ev3:
     
     def set_angle(self, motor, speed, angle):
         """
-        This function will set speed of an EV3 motor
+        This function will set anngle of an EV3 motor
         
         :param motor: Which motor (A/B/C/D)
         :param speed: Speed to run the motor 0-100
