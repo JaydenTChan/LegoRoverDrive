@@ -28,7 +28,6 @@ class ev3:
         """
         if self.conn != False:
             self.send_data("2")
-            time.sleep(5)
             self.socket.close()
         else:
             print("Connection Not Yet Made!")
