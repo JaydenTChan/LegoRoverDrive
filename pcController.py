@@ -1,5 +1,6 @@
 import ev3
 import time
+
 def Main():
     ev3_1 = ev3.ev3("10.0.2.5", 5000) #speed
     ev3_2 = ev3.ev3("10.0.2.1", 5001) #chuthulu (steering)
@@ -31,14 +32,14 @@ def stop(ev3):
     ev3.set_motor_speed("C", 0)
 
 def turnright(ev3):
-    ev3.setAngle("A", 30, -90)
-    ev3.setAngle("B", 30, 90)
-    ev3.setAngle("C", 30, 90)
+    ev3.set_angle("A", 30, -90)
+    ev3.set_angle("B", 30, 90)
+    ev3.set_angle("C", 30, 90)
 
 def turnleft(ev3):
-    ev3.setAngle("A", 30, 90)
-    ev3.setAngle("B", 30, -90)
-    ev3.setAngle("C", 30, -90)
+    ev3.set_angle("A", 30, 90)
+    ev3.set_angle("B", 30, -90)
+    ev3.set_angle("C", 30, -90)
 
     
 

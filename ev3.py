@@ -78,5 +78,20 @@ class ev3:
             self.send_data(speed)
         else:
             print("Connection not yet made!")
+    
+    def set_angle(self, motor, speed, angle):
+        """
+        This function will set speed of an EV3 motor
+        
+        :param motor: Which motor (A/B/C/D)
+        :param speed: Speed to run the motor 0-100
+        """
+        if self.conn != False:
+            self.send_data("3")
+            self.send_data(motor)
+            self.send_data(speed)
+            self.send_data(angle)
+        else:
+            print("Connection not yet made!")
         
         
