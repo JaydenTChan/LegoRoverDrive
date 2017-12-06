@@ -1,4 +1,5 @@
 import math
+import obj_detection
 # global variables
 maxRow = 4
 maxCol = 5
@@ -33,8 +34,8 @@ def initialize(target, start):
 	global rhs
 
 	for i in range(2):
-		Sgoal.append(target[i] // 10)
-		Sstart.append(start[i] // 10)
+		Sgoal.append(target[i])
+		Sstart.append(start[i])
 	rhs[Sgoal[0]][Sgoal[1]] = 0
 	openList.append([0, Sgoal[0], Sgoal[1]])
 	return
@@ -43,8 +44,8 @@ def updateObstacles(coord):
 	global obs
 	# coord is obstacle, update S
 	# set all obstacles to infinity
-	m = coord[0] // 10
-	n = coord[1] // 10
+	m = coord[0] 
+	n = coord[1] 
 	obs[m][n] = math.inf
 	return
 
@@ -135,9 +136,12 @@ def main():
 
 	path = []
 	print("Grabbing target and obstacle coordinates...\n")
-	start = [22, 44]
-	target = [0, 0]
-	obstacles = [[3, 23], [12, 12], [13, 23]]
+	objects=[]
+	while len(objects) < 2:
+		objects = detector() #returns list of objects, first is robot, second is target, the rest is values
+	start = objects[0]
+	target = objects[1]
+	obstacles = [obj for obj in objects[2:]]
 	initialize(target, start)
 	shortestPath(obstacles)
 	while SEARCHING is True:
