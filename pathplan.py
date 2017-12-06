@@ -1,8 +1,9 @@
 import math
-import obj_detection
+import obj_detection as utils
+import pcController as pc
 # global variables
-maxRow = 4
-maxCol = 5
+maxRow = 10	
+maxCol = 10
 obs = [[0] * maxCol for x in range(maxRow)] # keep track of obstacles
 rhs = [[math.inf] * maxCol for x in range(maxRow)]
 g = [[math.inf] * maxCol for x in range(maxRow)]
@@ -136,12 +137,11 @@ def main():
 
 	path = []
 	print("Grabbing target and obstacle coordinates...\n")
-	objects=[]
-	while len(objects) < 2:
-		objects = detector() #returns list of objects, first is robot, second is target, the rest is values
+
+	objects = utils.detector() #returns list of objects, first is robot, second is target, the rest is values
 	start = objects[0]
 	target = objects[1]
-	obstacles = [obj for obj in objects[2:]]
+	obstacles = objects[2:]
 	initialize(target, start)
 	shortestPath(obstacles)
 	while SEARCHING is True:

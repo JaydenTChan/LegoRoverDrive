@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 import imutils
 
 
-def blackball(frame, hsv, lower, upper):
+def yellowball(frame, hsv, lower, upper):
     ret = []
     mask = cv2.inRange(hsv, lower, upper)
     mask = cv2.erode(mask, None, iterations=2)
@@ -18,7 +18,7 @@ def blackball(frame, hsv, lower, upper):
     #c = max(conts, key=cv2.contourArea)
     for c in conts:
         
-        if cv2.contourArea(c) > 250 and cv2.contourArea(c) < 1500:
+        if cv2.contourArea(c) > 500 and cv2.contourArea(c) < 8000:
             ((x,y), radius) = cv2.minEnclosingCircle(c)
             M = cv2.moments(c)
             center = (int(M["m10"]/M["m00"]), int(M["m01"]/M["m00"]))
@@ -40,7 +40,7 @@ def ball(frame, hsv, lower, upper):
     #if (len(conts) > 0):
     #c = max(conts, key=cv2.contourArea)
     for c in conts:
-        print(cv2.contourArea(c))
+        #print(cv2.contourArea(c))
         if cv2.contourArea(c) > 30:
             ((x,y), radius) = cv2.minEnclosingCircle(c)
             M = cv2.moments(c)
@@ -64,7 +64,7 @@ def detector():
         #image operations
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         objects = []
-        ret, frame = blackball(frame, hsv, np.array([0,0,0]), np.array([179,255,75])) ##black (robot)
+        ret, frame = yellowball(frame, hsv, np.array([20, 100,100]), np.array([70,255,255])) ##yellow (robot)
         objects = objects +ret
         
         ret, frame = ball(frame, hsv, np.array([100,50,50]), np.array([130,255,255])) ##blue ball (target)
@@ -76,13 +76,14 @@ def detector():
         
         cv2.imshow('frame', frame)
         if len(objects) >= 3:
-            break
+            pass
+            #break
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
 
     #print(objects)
-    objects = [(obj[0]//60, obj[1]//60) for obj in objects]
+    objects = [(int(obj[0]//60), int(obj[1]//60)) for obj in objects]
     print(objects)
     cap.release()
     return objects
