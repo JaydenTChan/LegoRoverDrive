@@ -6,11 +6,11 @@ import cv2
 from matplotlib import pyplot as plt
 import imutils
 
+ev3_1 = ev3.ev3("10.0.2.5", 5000) #laura (steering)
+ev3_2 = ev3.ev3("10.0.2.1", 5001) #cthulu (speed)
 
-
-def Main():
-    ev3_1 = ev3.ev3("10.0.2.5", 5000) #laura (steering)
-    ev3_2 = ev3.ev3("10.0.2.1", 5001) #cthulu (speed)
+def initial():
+    
     
     ev3_1.connect()
     ev3_2.connect()
@@ -18,7 +18,7 @@ def Main():
     """
     ev3_2.set_motor_speed("A", "50")
     ev3_2.set_angle("B", "50", "90")
-    """
+    
     
 
     turnRightDiag(ev3_1)
@@ -27,9 +27,9 @@ def Main():
     time.sleep(5)
     turnLeftDiag(ev3_1)
 
+    """
     
-    input("Press Enter to continue...")
-    
+def disconnect():
     ev3_1.disconnect()
     ev3_2.disconnect()
     
@@ -40,7 +40,7 @@ def moveGrid(ev3_1, ev3_2, pos, target):
     pass
     
 def forward(ev3, angle):
-    ev3.set_angle("A", "50", "1440")
+    ev3.set_angle("A", "50", "1150")
     ev3.set_angle("B", "50", "1440")
     ev3.set_angle("C", "50", "1440")
     
@@ -82,6 +82,6 @@ def turnLeftDiag(ev3):
     ev3.set_angle("C", "-30", "-45")
     
 
-    
+    """
 if __name__ == '__main__':
-    Main() 
+    Main() """

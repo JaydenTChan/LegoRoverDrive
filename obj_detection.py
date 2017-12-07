@@ -14,17 +14,19 @@ def yellowball(frame, hsv, lower, upper):
     ##found blue
     x=-1
     y=-1
-    #if (len(conts) > 0):
-    #c = max(conts, key=cv2.contourArea)
-    for c in conts:
+    if (len(conts) > 0):
+        c = max(conts, key=cv2.contourArea)
+    else:
+        return ret, frame
+    #for c in conts:
         
-        if cv2.contourArea(c) > 500 and cv2.contourArea(c) < 8000:
-            ((x,y), radius) = cv2.minEnclosingCircle(c)
-            M = cv2.moments(c)
-            center = (int(M["m10"]/M["m00"]), int(M["m01"]/M["m00"]))
-            cv2.circle(frame, (int(x), int(y)), int(radius), (0,255,255), 2)
-            cv2.circle(frame, center, 5, (0,0,255), -1)
-            ret = ret + [(x,y)]
+    #if cv2.contourArea(c) > 500 and cv2.contourArea(c) < 8000:
+    ((x,y), radius) = cv2.minEnclosingCircle(c)
+    M = cv2.moments(c)
+    center = (int(M["m10"]/M["m00"]), int(M["m01"]/M["m00"]))
+    cv2.circle(frame, (int(x), int(y)), int(radius), (0,255,255), 2)
+    cv2.circle(frame, center, 5, (0,0,255), -1)
+    ret = ret + [(x,y)]
 
     return ret, frame
 def ball(frame, hsv, lower, upper):
@@ -41,7 +43,7 @@ def ball(frame, hsv, lower, upper):
     #c = max(conts, key=cv2.contourArea)
     for c in conts:
         #print(cv2.contourArea(c))
-        if cv2.contourArea(c) > 30:
+        if cv2.contourArea(c) > 120:
             ((x,y), radius) = cv2.minEnclosingCircle(c)
             M = cv2.moments(c)
             center = (int(M["m10"]/M["m00"]), int(M["m01"]/M["m00"]))
@@ -58,22 +60,27 @@ def detector():
     smile_cascade = cv2.CascadeClassifier('haarcascade_smile.xml')
     while(True):
         #frame capture
-        ret, frame = cap.read()
-        
-        frame = imutils.resize(frame, width=600)
-        #image operations
-        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        print("here")
         objects = []
-        ret, frame = yellowball(frame, hsv, np.array([20, 100,100]), np.array([70,255,255])) ##yellow (robot)
-        objects = objects +ret
+        while len(objects) == 0:
+            r, frame = cap.read()
+            frame = imutils.resize(frame, width=600)
+                #image operations
+            hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+                
+            ret, frame = yellowball(frame, hsv, np.array([20, 100,100]), np.array([70,255,255])) ##yellow (robot)
+            objects = objects +ret
         
         ret, frame = ball(frame, hsv, np.array([100,50,50]), np.array([130,255,255])) ##blue ball (target)
         objects = objects +ret
         ret, frame = ball(frame, hsv, np.array([130,50,50]), np.array([179,255,255])) ##red balls (obstacles)
         objects = objects +ret
-        ret, frame = ball(frame, hsv, np.array([0,100,100]), np.array([55,255,255])) ##red balls (obstacles)
+        ret, frame = ball(frame, hsv, np.array([0,100,100]), np.array([10,255,255])) ##red balls (obstacles)
         objects = objects +ret
         
+        for i in range(10):
+            cv2.line(frame, (60*i, 0), (60*i, 600), (255,0,0), 1)
+            cv2.line(frame, (0, 60*i), (600,60*i,), (255,0,0), 1)
         cv2.imshow('frame', frame)
         if len(objects) >= 3:
             pass
@@ -84,10 +91,10 @@ def detector():
 
     #print(objects)
     objects = [(int(obj[0]//60), int(obj[1]//60)) for obj in objects]
-    print(objects)
     cap.release()
-    return objects
     #cv2.destroyAllWindows()
+    return objects, frame
+    
 
 
 

@@ -93,4 +93,45 @@ class ev3:
         else:
             print("Connection not yet made!")
         
+    def forward(self, angle):
+        angle = str(angle)
+        self.set_angle("A", "50", angle)
+        self.set_angle("B", "50", angle)
+        self.set_angle("C", "50", angle)
         
+    def stop(self):
+        self.set_angle("A", "0", "0")
+        self.set_angle("B", "0", "0")
+        self.set_angle("C", "0", "0")
+
+    def turnRight(self):
+        """
+        Use with Laura ev3
+        """
+        self.set_angle("A", "30", "90")
+        self.set_angle("B", "-30", "-90")
+        self.set_angle("C", "30", "90")
+
+    def turnLeft(self):
+        """
+        Use with Laura ev3
+        """
+        self.set_angle("A", "-30", "-90")
+        self.set_angle("B", "30", "90")
+        self.set_angle("C", "-30", "-90")
+
+    def turnRightDiag(self):
+        """
+        Use with Laura ev3
+        """
+        self.set_angle("A", "30", "45")
+        self.set_angle("B", "-30", "-45")
+        self.set_angle("C", "30", "45")
+
+    def turnLeftDiag(self):
+        """
+        Use with Laura ev3
+        """
+        self.set_angle("A", "-30", "-45")
+        self.set_angle("B", "30", "45")
+        self.set_angle("C", "-30", "-45")
