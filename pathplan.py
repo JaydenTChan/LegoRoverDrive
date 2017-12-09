@@ -234,8 +234,8 @@ def find_path():
 
 
 def main():
-	ev3_1.connect() #LAURA (STEERING)
-	ev3_2.connect() #CTHULU (SPEED)
+	#ev3_1.connect() #LAURA (STEERING)
+	#ev3_2.connect() #CTHULU (SPEED)
 	
 
 	start, path, frame = find_path()
@@ -244,10 +244,10 @@ def main():
 
 	for point in path:
 		direction = [position[0]-point[0], position[1]-point[1]]
-		cases(direction)
+		#cases(direction)
 		position = point
-	ev3_1.disconnect()
-	ev3_2.disconnect()
+	#ev3_1.disconnect()
+	#ev3_2.disconnect()
 	print("Done")
 	return 
 
@@ -292,7 +292,7 @@ def cases(direction):
 		ev3_1.turnRightDiag()
 		time.sleep(1)
 	else:
-		print("Your Trash there is an error")
+		print("You're Trash there is an error")
 		print(direction)
 
 if __name__ == '__main__':

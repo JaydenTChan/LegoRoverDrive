@@ -60,7 +60,7 @@ def detector():
     smile_cascade = cv2.CascadeClassifier('haarcascade_smile.xml')
     while(True):
         #frame capture
-        print("here")
+        #print("here")
         objects = []
         while len(objects) == 0:
             r, frame = cap.read()
